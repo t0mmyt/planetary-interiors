@@ -23,9 +23,9 @@ class PeriodicTable:
         """Fetches attributes for a given symbol (e.g. Fe)"""
         return self._pt.loc[element]
 
-    def molecular_mass(self, oxide: str) -> np.float64:
-        """Molar mass for a given molecule/oxide (e.g. SiO2)"""
-        counts = self.atomic_counts(oxide)
+    def molecular_mass(self, formula: str) -> np.float64:
+        """Molar mass for a given formula (e.g. SiO2)"""
+        counts = self.atomic_counts(formula)
         return reduce(lambda w, e: w + self.sym(e).AtomicMass * counts[e], counts, 0)
 
     @staticmethod
@@ -40,7 +40,7 @@ class PeriodicTable:
 
 
 @dataclass
-class BulkSilicate:
+class BulkComposition:
     pt: PeriodicTable = field(default_factory=PeriodicTable)
     oxides_wt_pct: dict[str, np.float64] = field(default_factory=dict)
 
@@ -66,9 +66,9 @@ class BulkSilicate:
         return elems
 
     @classmethod
-    def from_csv_model(cls, csv_file: str) -> "BulkSilicate":
+    def from_csv_model(cls, csv_file: str) -> "BulkComposition":
         """Reads a bulk silicate model from a CSV file containing 'oxide' and 'wt_pct'"""
-        bs = BulkSilicate()
+        bs = BulkComposition()
         with open(csv_file) as f:
             reader = csv.DictReader(f)
             for row in reader:

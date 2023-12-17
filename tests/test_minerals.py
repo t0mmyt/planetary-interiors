@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from model.minerals import PeriodicTable, BulkSilicate
+from model.minerals import PeriodicTable, BulkComposition
 
 
 @pytest.fixture
@@ -39,10 +39,10 @@ class TestPeriodicTable:
 
 
 class TestBulkSilicate:
-    bs = BulkSilicate.from_csv_model("data/test_bsm.csv")
+    bs = BulkComposition.from_csv_model("data/test_bsm.csv")
 
     def test_bulk_silicate_total(self, pt):
-        bs = BulkSilicate()
+        bs = BulkComposition()
         oxides = [("SiO2", 45.5), ("MgO", 31.0), ("FeO", 14.7)]
         for o in oxides:
             bs.add(*o)
@@ -62,7 +62,7 @@ class TestBulkSilicate:
     )
     def test_molar_masses(self, oxides, pct):
         """Uses some common minerals to test BS Molar Masses"""
-        bs = BulkSilicate()
+        bs = BulkComposition()
         for i in range(len(oxides)):
             bs.add(oxides[i], pct[i])
         mm = bs.molar_masses()

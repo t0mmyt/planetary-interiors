@@ -1,1 +1,1 @@
-from .minerals import PeriodicTable, BulkSilicate
+from .minerals import PeriodicTable, BulkComposition
